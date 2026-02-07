@@ -9,8 +9,9 @@ C++20 기반의  이벤트 루프 엔진(`hypernet`)과 애플리케이션 런�
 아래 링크는 네트워크 엔진 구조를 파악할 수 있도록 클래스 즉 객체의 멤버 데이터를 분리하여 메모리 구조를 시각화한 자료입니다.
 왼쪽 상단의 메뉴에서 다크모드 설정 후 컨트롤+마우스휠 확대 및 축소 하여 확인 가능하며 키보드 H 즉 HandMode로 보시면 됩니다.
 <img width="428" height="693" alt="image" src="https://github.com/user-attachments/assets/f6373282-5259-4bec-983f-fa1b56987a22" />
+https://excalidraw.com/#json=UD1w0CEenEK73Q5TI9QRM,eaWBoR-TwJ-jY-z9KjTt8w
 
-https://excalidraw.com/#json=UD1w0CEenEK73Q5TI9QRM,eaWBoR-TwJ-jY-z9KjTt8w 
+
 
 
 
