@@ -1,5 +1,3 @@
-<img width="428" height="693" alt="image" src="https://github.com/user-attachments/assets/f6373282-5259-4bec-983f-fa1b56987a22" />
-
 # HyperNet / HyperApp
 
 C++20 기반의  이벤트 루프 엔진(`hypernet`)과 애플리케이션 런타임(`hyperapp`) 프로젝트입니다.
@@ -10,6 +8,8 @@ C++20 기반의  이벤트 루프 엔진(`hypernet`)과 애플리케이션 런�
 전체 시스템은 다음 3가지 컴포넌트로 구성되어 있으며, TCP/IP 기반으로 통신합니다.
 아래 링크는 네트워크 엔진 구조를 파악할 수 있도록 클래스 즉 객체의 멤버 데이터를 분리하여 메모리 구조를 시각화한 자료입니다.
 왼쪽 상단의 메뉴에서 다크모드 설정 후 컨트롤+마우스휠 확대 및 축소 하여 확인 가능하며 키보드 H 즉 HandMode로 보시면 됩니다.
+<img width="428" height="693" alt="image" src="https://github.com/user-attachments/assets/f6373282-5259-4bec-983f-fa1b56987a22" />
+
 https://excalidraw.com/#json=UD1w0CEenEK73Q5TI9QRM,eaWBoR-TwJ-jY-z9KjTt8w 
 
 
@@ -69,7 +69,27 @@ cmake --build build -j
 
 ## Benchmark Execution
 
-스크립트를 통해 시나리오별 벤치마크를 수행할 수 있습니다.
+스크립트를 통해 시나리오별 벤치마크를 수행할 수 있지만 각 환경에 맞게 스크립트 수정이 필요합니다.
+일반적인 실행 방법은 아래와 같습니다.
+
+--s1 테스트 진행시
+1) ./build/bin/mock_exchange --config ./config/s1/exchange.toml
+2) ./build/bin/fep_gateway --config ./config/s1/fep.toml
+3) ./build/bin/loadgen --config ./config/s1/client.toml 
+--s2 테스트 진행시
+1) ./build/bin/mock_exchange --config ./config/s2/exchange.toml
+2) ./build/bin/fep_gateway --config ./config/s2/fep.toml
+3) ./build/bin/loadgen --config ./config/s2/client.toml
+
+--s3 테스트 진행시
+1) ./build/bin/mock_exchange --config ./config/s3/exchange.toml
+2) ./build/bin/fep_gateway --config ./config/s3/fep.toml
+3) ./build/bin/loadgen --config ./config/s3/client.toml
+
+각각 순서대로 실행해야 합니다.
+예시 화면)
+<img width="1904" height="1101" alt="image" src="https://github.com/user-attachments/assets/7e6286c6-4122-40df-8296-3a27ee3f71dd" />
+
 
 ### 1. 단일 시나리오 실행
 
@@ -80,7 +100,7 @@ cmake --build build -j
 # Multi-thread 확장성 테스트
 ./scripts/run_bench.sh s2
 
-# Handoff 오버헤드 측정
+# TaskQueue 오버헤드 측정
 ./scripts/run_bench.sh s3
 
 ```
@@ -116,7 +136,7 @@ cmake --build build -j
 > 즉, 세션이 N개라 하더라도 "동시에 N개 요청"을 보내는 것이 아니라, **"한 번에 1개의 왕복(RTT)"을 세션만 순차적으로 바꿔가며 수행**합니다.
 
 * **목적**: 순수 레이턴시(Latency p99/p99.9)의 회귀(Regression)를 정밀하게 추적하기 위함
-* **한계**: 대규모 동시성(Concurrency)이나 최대 처리량(Max Throughput) 검증 모델로는 적합하지 않음
+* **한계**: 대규모 동시성(Concurrency)이나 최대 처리량(Max Throughput) 검증 모델로는 적합하지 않음 이 부분은 업데이트 예정입니다.
 
 ---
 
