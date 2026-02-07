@@ -1,0 +1,36 @@
+[engine]
+listen_address        = "127.0.0.1"
+listen_port           = 9000
+listen_backlog        = 1024
+
+worker_threads        = 2
+reuse_port            = true
+
+log_level             = "info"
+log_file_path         = ""
+
+metrics_http_address  = "127.0.0.1"
+metrics_port          = 9100
+
+idle_timeout_ms       = 60000
+heartbeat_interval_ms = 15000
+
+shutdown_drain_timeout_ms = 2000
+shutdown_poll_interval_ms = 1000
+
+tick_resolution_ms    = 10
+timer_slots           = 1024
+max_epoll_events      = 1024
+
+buffer_block_size     = 0
+buffer_block_count    = 0
+
+recv_ring_capacity    = 200000
+send_ring_capacity    = 65536
+
+max_payload_len       = 65536
+
+[app.fep_gateway]
+upstream_host = "127.0.0.1"
+upstream_port = 10000
+handoff_mode = false

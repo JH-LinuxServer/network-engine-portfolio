@@ -1,0 +1,45 @@
+# =====================================
+# Client (Loadgen)
+# =====================================
+
+[engine]
+listen_address = "127.0.0.1"
+listen_port    = 0              # client는 서버 listen 안 함
+listen_backlog = 1024
+
+worker_threads = 1             # client는 단일 워커 권장
+reuse_port     = false
+
+log_level      = "info"
+log_file_path  = ""
+
+metrics_http_address = "127.0.0.1"
+metrics_port         = 9101
+
+idle_timeout_ms       = 60000
+heartbeat_interval_ms = 15000
+
+shutdown_drain_timeout_ms = 2000
+shutdown_poll_interval_ms = 1000
+
+tick_resolution_ms = 10
+timer_slots        = 1024
+max_epoll_events   = 1024
+
+buffer_block_size  = 0
+buffer_block_count = 0
+
+recv_ring_capacity = 200000
+send_ring_capacity = 65536
+
+max_payload_len    = 65536
+
+
+# -------------------------------------
+# Application (Client-specific)
+# -------------------------------------
+[app.loadgen]
+fep_host = "127.0.0.1"
+fep_port = 9000
+auto_scope = false
+connection_count = 10

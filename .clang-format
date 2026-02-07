@@ -1,0 +1,26 @@
+BasedOnStyle: LLVM
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+ColumnLimit: 200
+AccessModifierOffset: -2
+
+# 1. 기본 스타일은 Allman (줄바꿈)
+BreakBeforeBraces: Allman
+
+# 2. [추천] 짧은 함수는 한 줄 허용 (클래스 내부 등에서 가독성 확보)
+# 옵션: None (절대 안됨), All (전부 허용), Inline (클래스 내부만 허용 - 추천)
+AllowShortFunctionsOnASingleLine: Inline
+
+# 3. [추천] if/for/while 문은 짧아도 무조건 줄바꿈 (안전성 확보)
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+
+# 4. 람다(Lambda) 처리
+# 람다는 Allman을 적용하면 코드가 너무 퍼져서 읽기 힘들 수 있습니다.
+# 람다 내부만 Attach 스타일(같은 줄)로 유지하고 싶다면 아래 옵션이 유용합니다.
+# (최신 Clang-format 버전에 따라 동작이 다를 수 있음)
+LambdaBodyIndentation: Signature
+
+NamespaceIndentation: None
+SortIncludes: false

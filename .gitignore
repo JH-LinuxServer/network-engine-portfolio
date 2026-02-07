@@ -1,0 +1,26 @@
+# 1. Build & Binary Output
+build/
+build_*/
+bin/
+lib/*.a
+*.o
+*.so
+
+# 2. Runtime Logs & Data (Benchmarks)
+logs_runtime/
+results/
+perf.data
+*.log
+*.csv
+
+# 3. IDE & System Metadata
+.vscode/
+.idea/
+.cache/
+.DS_Store
+.gdb_history
+compile_commands.json
+
+# 4. Temporary Files
+*.swp
+*~

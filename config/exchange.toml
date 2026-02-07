@@ -1,0 +1,36 @@
+# ==========================
+# Mock Exchange Configuration
+# ==========================
+
+[engine]
+listen_address = "127.0.0.1"
+listen_port    = 10000
+listen_backlog = 1024
+
+worker_threads = 1
+reuse_port     = true
+
+log_level      = "info"
+log_file_path  = ""
+
+metrics_http_address = "127.0.0.1"
+metrics_port         = 9102
+
+idle_timeout_ms       = 60000
+heartbeat_interval_ms = 15000
+
+shutdown_drain_timeout_ms = 2000
+shutdown_poll_interval_ms = 1000
+
+tick_resolution_ms = 10
+timer_slots        = 1024
+max_epoll_events   = 1024
+
+buffer_block_size  = 0
+buffer_block_count = 0
+
+recv_ring_capacity = 200000
+send_ring_capacity = 65536
+
+max_payload_len    = 65536
+
