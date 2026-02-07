@@ -1,4 +1,4 @@
-
+<img width="428" height="693" alt="image" src="https://github.com/user-attachments/assets/f6373282-5259-4bec-983f-fa1b56987a22" />
 
 # HyperNet / HyperApp
 
@@ -8,6 +8,11 @@ C++20 기반의  이벤트 루프 엔진(`hypernet`)과 애플리케이션 런�
 ## Architecture
 
 전체 시스템은 다음 3가지 컴포넌트로 구성되어 있으며, TCP/IP 기반으로 통신합니다.
+아래 링크는 네트워크 엔진 구조를 파악할 수 있도록 클래스 즉 객체의 멤버 데이터를 분리하여 메모리 구조를 시각화한 자료입니다.
+왼쪽 상단의 메뉴에서 다크모드 설정 후 컨트롤+마우스휠 확대 및 축소 하여 확인 가능하며 키보드 H 즉 HandMode로 보시면 됩니다.
+https://excalidraw.com/#json=UD1w0CEenEK73Q5TI9QRM,eaWBoR-TwJ-jY-z9KjTt8w 
+
+
 
 ```mermaid
 flowchart LR
@@ -19,6 +24,7 @@ flowchart LR
 * **Mock Exchange**: 단순 주문 흐름을  모사 (Ping 수신 → Pong 반환)
 * **FEP Gateway**: Client와 Exchange 사이의 중계 및 라우팅, 스레드 핸드오프(Handoff) 처리
 * **LoadGen**: 지정한 세션 수로 접속하여 Ping/Pong 왕복 레이턴시(RTT) 측정
+
 
 ---
 
@@ -56,7 +62,7 @@ cmake --build build -j
 | Scenario | Name | Description |
 | --- | --- | --- |
 | **s1** | Baseline | `worker_threads=1`. 단일 워커 스레드 처리 기준선 (No overhead) |
-| **s2** | Scale/Local | `worker_threads=2`. 스레드 간 경합을 최소화한 로컬 라우팅 테스트 |
+| **s2** | Scale/Local | `worker_threads=2`. gateway,mock 스레드를 2개로 확장하여 테스트 |
 | **s3** | Handoff | `worker_threads=2`. Session-ID 기반 강제 Cross-worker handoff 비용 측정 |
 
 ---
