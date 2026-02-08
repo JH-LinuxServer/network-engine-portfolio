@@ -12,6 +12,18 @@ C++20 기반의  이벤트 루프 엔진(`hypernet`)과 애플리케이션 런�
 https://excalidraw.com/#json=LNlbRkGuTA2imG82U5Yke,zSVhlb7OJTzF2J1_f14WIA
 
 
+# ENGINE_MODEL
+
+Thread-per-core + SO_REUSEPORT: 워커 IO 스레드마다(보통 코어마다) 리슨 소켓을 따로 두고 커널이 accept 분산.
+
+메인 스레드 역할: 워커들이 공통으로 쓸 “객체/리소스(설정, 로거, 풀, 매니저 등)”를 생성.
+
+워커 IO 스레드 역할: 각자 초기화(자기 이벤트루프/리액터/리슨 소켓/상태 준비)를 끝낸 뒤 독립적으로 동작.
+
+세션 소유권(affinity): “각 워커가 자기 세션을 소유”하고, 해당 세션의 IO/상태 처리는 원칙적으로 소유 워커에서만 수행.
+
+크로스-워커 동작(자기 소유가 아닌 세션 send, broadcast, routing 등)은 전부 TaskQueue로 넘겨서 소유 워커에서 처리.
+
 
 
 
