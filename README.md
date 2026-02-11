@@ -181,3 +181,16 @@ cmake --build build -j
 ├── runtime/            # Application Runtime (StateMachine, Service Layer)
 ├── scripts/            # 벤치마크 자동화 및 유틸리티 스크립트
 └── results/            # 벤치마크 실행 결과 저장소 (Ignore 처리됨)
+
+
+=========================!!!==================
+std::atomic<std::uint32_t> tpsMode_{false}; 상태로 놓아야 합니다!
+혹시 TPS test 하신다면 터미널3개 열고
+1) ./build/bin/mock_exchange --config ./config/exchange.toml
+2) ./build/bin/fep_gateway --config ./config/fep.toml
+3) ./build/bin/loadgen --config ./config/client.toml
+실행 후에
+루트에서 ./scripts/monitor_system.py 하시면 됩니다!
+일단 임시로 빠르게 테스트 해보려고, 수정한거라 감안해서 봐주시면 감사하겠습니다.
+<img width="1169" height="708" alt="image" src="https://github.com/user-attachments/assets/0761a964-308a-4812-b2e1-9d916907923a" />
+
