@@ -181,9 +181,9 @@ cmake --build build -j
 ├── runtime/            # Application Runtime (StateMachine, Service Layer)
 ├── scripts/            # 벤치마크 자동화 및 유틸리티 스크립트
 └── results/            # 벤치마크 실행 결과 저장소 (Ignore 처리됨)
+```
 
 
-=========================!!!==================
 std::atomic<std::uint32_t> tpsMode_{false}; 상태로 놓아야 합니다!
 혹시 TPS test 하신다면 터미널3개 열고
 1) ./build/bin/mock_exchange --config ./config/exchange.toml
