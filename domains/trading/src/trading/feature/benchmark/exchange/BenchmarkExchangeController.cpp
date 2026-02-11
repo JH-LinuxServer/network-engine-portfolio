@@ -5,7 +5,7 @@
 #include <hyperapp/protocol/PacketWriter.hpp>
 #include <trading/controllers/PacketBind.hpp>
 #include <trading/protocol/FepPackets.hpp>
-
+#include <hypernet/monitoring/Metrics.hpp>
 namespace
 {
 // 현재 시간 (나노초)
@@ -43,6 +43,7 @@ void BenchmarkExchangeController::onPerfPing(hyperapp::AppRuntime &rt, hypernet:
     // Mock 도착 시간 기록 [T3]
     response.t3 = nowNs();
     (void)rt.service().sendTo(session.id(), response);
+    hypernet::monitoring::engineMetrics().onTxMessage();
 }
 
 } // namespace trading::feature::benchmark::exchange

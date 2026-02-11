@@ -47,6 +47,7 @@ class BenchmarkClientController final : public trading::IController, public std:
     std::uint64_t seq_{0};
     std::uint64_t start_ns_{0}; // 측정(Measure) 시작점
 
+    std::atomic<std::uint32_t> tpsMode_{true};
     static constexpr std::uint64_t kWarmupCount = 10000;
     static constexpr std::uint64_t kMeasureCount = 200000;
 };

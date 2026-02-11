@@ -34,16 +34,20 @@ void BenchmarkClientController::install(hypernet::protocol::Dispatcher &dispatch
 
 void BenchmarkClientController::onHandshakeOk(hyperapp::AppRuntime &rt, hypernet::SessionHandle session)
 {
-    sessions_.push_back(session.id());
 
-    // 목표 세션 수가 모이면 딱 1번만 시작
-    if (!started_ && static_cast<int>(sessions_.size()) >= target_sessions_)
+    sessions_.push_back(session.id());
+    if (tpsMode_)
+    {
+        trading::protocol::PerfPingPkt pkt{};
+        pkt.seq = 1;
+        (void)rt.service().sendTo(session.id(), pkt);
+    }
+    else if (!started_ && static_cast<int>(sessions_.size()) >= target_sessions_)
     {
         started_ = true;
         rr_ = 0;
         seq_ = 1;
 
-        // warmup이 0이면 측정 시작도 곧바로
         start_ns_ = (kWarmupCount == 0) ? nowNs() : 0;
 
         SLOG_INFO("Loadgen", "BenchmarkStart", "Target={} (Warmup={} + Measure={}) sessions={}", kWarmupCount + kMeasureCount, kWarmupCount, kMeasureCount, sessions_.size());
@@ -56,8 +60,19 @@ void BenchmarkClientController::onHandshakeOk(hyperapp::AppRuntime &rt, hypernet
     }
 }
 
-void BenchmarkClientController::onPerfPong(hyperapp::AppRuntime &rt, hypernet::SessionHandle /*session*/, const trading::protocol::PerfPongPkt &pkt, const hyperapp::SessionContext &)
+void BenchmarkClientController::onPerfPong(hyperapp::AppRuntime &rt, hypernet::SessionHandle session, const trading::protocol::PerfPongPkt &pkt, const hyperapp::SessionContext &)
 {
+    if (tpsMode_)
+    {
+        trading::protocol::PerfPingPkt pkt{};
+        pkt.seq++;
+        (void)rt.service().sendTo(session.id(), pkt);
+        if (pkt.seq == kMeasureCount / sessions_.size())
+        {
+            rt.onSessionEnd(session);
+        }
+        return;
+    }
     const std::uint64_t t5 = nowNs();
 
     // Warmup 이후부터 기록

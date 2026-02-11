@@ -29,7 +29,7 @@ max_epoll_events   = 1024
 buffer_block_size  = 0
 buffer_block_count = 0
 
-recv_ring_capacity = 200000
+recv_ring_capacity = 65536
 send_ring_capacity = 65536
 
 max_payload_len    = 65536

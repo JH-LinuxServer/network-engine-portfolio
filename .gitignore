@@ -24,3 +24,7 @@ compile_commands.json
 # 4. Temporary Files
 *.swp
 *~
+build_relwithdebinfo/
+results/
+build*
+note/

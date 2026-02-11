@@ -4,7 +4,7 @@
 #include <trading/protocol/FepPackets.hpp>
 
 #include <hypernet/core/ThreadContext.hpp>
-
+#include <hypernet/monitoring/Metrics.hpp>
 #include <chrono>
 
 namespace
@@ -19,10 +19,7 @@ namespace trading::feature::benchmark::gateway
 {
 
 // [FIX] 생성자 구현
-BenchmarkGatewayController::BenchmarkGatewayController(std::shared_ptr<hyperapp::UpstreamGateway> upstream, bool handoff_mode)
-    : upstream_(std::move(upstream)), handoff_mode_(handoff_mode)
-{
-}
+BenchmarkGatewayController::BenchmarkGatewayController(std::shared_ptr<hyperapp::UpstreamGateway> upstream, bool handoff_mode) : upstream_(std::move(upstream)), handoff_mode_(handoff_mode) {}
 
 void BenchmarkGatewayController::install(hypernet::protocol::Dispatcher &dispatcher, hyperapp::AppRuntime &runtime)
 {
@@ -44,9 +41,7 @@ void BenchmarkGatewayController::onPerfPing(hyperapp::AppRuntime &rt, hypernet::
 
     // S2(local): route by current worker id (no cross-worker)
     // S3(handoff): route by client session id (cross-worker handoff)
-    const int idx = handoff_mode_
-                        ? static_cast<int>(session.id() % wc)
-                        : static_cast<int>(hypernet::core::wid() % wc);
+    const int idx = handoff_mode_ ? static_cast<int>(session.id() % wc) : static_cast<int>(hypernet::core::wid() % wc);
 
     const auto upstreamSid = upstream_->getForWorker(idx);
 
@@ -56,6 +51,7 @@ void BenchmarkGatewayController::onPerfPing(hyperapp::AppRuntime &rt, hypernet::
     fwd.t2 = nowNs();
 
     (void)rt.service().sendTo(upstreamSid, fwd);
+    hypernet::monitoring::engineMetrics().onTxMessage();
 }
 
 void BenchmarkGatewayController::onPerfPong(hyperapp::AppRuntime &rt, hypernet::SessionHandle /*session*/, const trading::protocol::PerfPongPkt &pkt, const hyperapp::SessionContext &)
@@ -68,7 +64,7 @@ void BenchmarkGatewayController::onPerfPong(hyperapp::AppRuntime &rt, hypernet::
     fwd.t4 = nowNs();
 
     (void)rt.service().sendTo(clientSid, fwd);
+    hypernet::monitoring::engineMetrics().onTxMessage();
 }
 
 } // namespace trading::feature::benchmark::gateway
-
